@@ -12,22 +12,7 @@
 <body>
   <main class="app">
     <header class="topbar">
-      <div class="brand">
-        <h1 id="gameTitle">合成PKU</h1>
-        <p>左右拖动·松手落下</p>
-      </div>
-
-      <div class="metric metric-score">
-        <span>得分</span>
-        <strong id="score">0</strong>
-      </div>
-
-      <div class="metric">
-        <span>最高</span>
-        <strong id="bestScore">0</strong>
-      </div>
-
-      <div class="header-actions">
+      <div class="topbar-left">
         <button
           class="icon-button"
           id="soundButton"
@@ -38,7 +23,28 @@
         >
           <span class="sound-icon" id="soundIcon" aria-hidden="true"></span>
         </button>
-        <button class="small-button restart-button" id="restartButton" type="button" tabindex="-1" disabled>重开</button>
+        <div class="metric metric-score">
+          <span>得分</span>
+          <strong id="score">0</strong>
+        </div>
+      </div>
+
+      <div class="brand">
+        <h1 id="gameTitle">合成PKU</h1>
+        <p>左右拖动·松手落下</p>
+      </div>
+
+      <div class="topbar-right">
+        <div class="metric">
+          <span>最高</span>
+          <strong id="bestScore">0</strong>
+        </div>
+        <button class="icon-button restart-button" id="restartButton" type="button" tabindex="-1" disabled aria-label="重开">
+          <svg class="restart-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path d="M20.5 12a8.5 8.5 0 1 1-2.6-6.1" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M18.4 2.6v5.2h-5.2" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </header>
 
