@@ -38,6 +38,8 @@
   var SPAWN_Y = DANGER_LINE / 2;
   var MAX_ITEM_RADIUS = (RIGHT_WALL - LEFT_WALL) / 2 - 1;
   var MAX_SCORE = Number.MAX_SAFE_INTEGER;
+  // 圆角边界半径，须与 style.css 的 .board border-radius 一致（世界单位）。
+  var CORNER_RADIUS = 22;
 
   var FIXED_STEP = 1 / 120;
   var MAX_STEPS = 8;
@@ -490,6 +492,26 @@
     }
   }
 
+  function solveCorner(body, cx, cy, grounded) {
+    // 凹弧角约束：球心须落在以角心为圆心、半径 (rc - br) 的圆内。
+    // 只对 rc>br 的小球生效；大球半径≥rc 时由直边墙处理，不进角弧。
+    var br = body.radius;
+    if (br >= CORNER_RADIUS) {
+      return;
+    }
+    var dx = body.x - cx;
+    var dy = body.y - cy;
+    var d = Math.hypot(dx, dy);
+    var maxD = CORNER_RADIUS - br;
+    if (d <= maxD || d < 0.0001) {
+      return;
+    }
+    var penetration = d - maxD;
+    var nx = -dx / d; // 指向角心（板内方向）
+    var ny = -dy / d;
+    projectBoundary(body, nx, ny, penetration, grounded);
+  }
+
   function solveBounds(body, grounded) {
     var penetration;
 
@@ -504,6 +526,20 @@
     if (body.y + body.radius > FLOOR) {
       penetration = body.y + body.radius - FLOOR;
       projectBoundary(body, 0, -1, penetration, grounded);
+    }
+
+    // 四角圆弧约束（球心落入角方格内时，用凹弧代替直角）
+    if (body.x < CORNER_RADIUS && body.y < CORNER_RADIUS) {
+      solveCorner(body, CORNER_RADIUS, CORNER_RADIUS, grounded);
+    }
+    if (body.x > RIGHT_WALL - CORNER_RADIUS && body.y < CORNER_RADIUS) {
+      solveCorner(body, RIGHT_WALL - CORNER_RADIUS, CORNER_RADIUS, grounded);
+    }
+    if (body.x < CORNER_RADIUS && body.y > FLOOR - CORNER_RADIUS) {
+      solveCorner(body, CORNER_RADIUS, FLOOR - CORNER_RADIUS, grounded);
+    }
+    if (body.x > RIGHT_WALL - CORNER_RADIUS && body.y > FLOOR - CORNER_RADIUS) {
+      solveCorner(body, RIGHT_WALL - CORNER_RADIUS, FLOOR - CORNER_RADIUS, grounded);
     }
   }
 
