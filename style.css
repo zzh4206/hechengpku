@@ -179,27 +179,43 @@ canvas:focus {
   inset: 0;
   z-index: 5;
   padding: 22px;
-  background-color: rgba(255, 253, 248, 0.94);
+  background-color: rgba(40, 14, 56, 0.5);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   display: grid;
   place-items: center;
 }
 
 .overlay-card {
+  position: relative;
   width: 100%;
-  max-width: 326px;
-  padding: 25px 23px 23px;
-  border: 1px solid #dcd5c8;
-  border-radius: 24px;
-  background-color: #fffdf8;
-  box-shadow: 0 14px 34px rgba(55, 47, 36, 0.12);
+  max-width: 330px;
+  padding: 30px 26px 26px;
+  border: none;
+  border-radius: 26px;
+  background: linear-gradient(180deg, #ffffff 0%, #faf6ff 100%);
+  box-shadow: 0 24px 60px rgba(40, 10, 60, 0.24), 0 2px 8px rgba(40, 10, 60, 0.1);
   text-align: center;
+  overflow: hidden;
+}
+
+.confirm-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #94070a 0%, #6a2a8a 100%);
 }
 
 .overlay h2 {
-  margin: 0;
-  font-size: 27px;
-  line-height: 1.25;
-  letter-spacing: -0.04em;
+  margin: 4px 0 8px;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: #94070a;
+  font-weight: 800;
 }
 
 .small-button,
@@ -214,42 +230,50 @@ canvas:focus {
 }
 
 .result-row {
-  margin-bottom: 14px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  margin: 4px 0 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
 .result-row > div {
-  padding: 11px 8px;
-  border-radius: 13px;
-  background-color: #f2eee5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  background: none;
 }
 
 .result-row > div > span {
   display: block;
-  margin-bottom: 2px;
-  color: #6f685f;
-  font-size: 11px;
+  color: #9a8f86;
+  font-size: 10px;
   font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
 }
 
 .result-row > div > strong {
   display: block;
-  color: #4c3b87;
-  font-size: 20px;
+  color: #94070a;
+  font-size: 32px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
 }
 
 .highest-item {
-  width: 64px;
-  height: 64px;
-  margin: 4px auto 0;
+  width: 88px;
+  height: 88px;
   overflow: hidden;
   border-radius: 50%;
-  background-color: #fdfbfb;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  background: radial-gradient(circle, #ffffff 0%, #f1e9f3 100%);
+  box-shadow: 0 6px 18px rgba(60, 20, 60, 0.2), inset 0 0 0 2px rgba(148, 7, 10, 0.08);
   display: grid;
   place-items: center;
+  padding: 8px;
 }
 
 .highest-item img {
@@ -259,9 +283,16 @@ canvas:focus {
 }
 
 .new-record {
-  margin: -4px 0 13px;
-  color: #b83240;
+  display: inline-block;
+  margin: 0 auto 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #94070a 0%, #6a2a8a 100%);
+  color: #ffffff;
+  font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.14em;
+  box-shadow: 0 3px 10px rgba(148, 7, 10, 0.3);
 }
 
 .small-button {
@@ -343,13 +374,25 @@ canvas:focus {
 }
 
 .confirm-card h2 {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+}
+
+.confirm-badge {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #94070a;
+  background: radial-gradient(circle, #fff 0%, #fbeaec 100%);
+  box-shadow: inset 0 0 0 2px rgba(148, 7, 10, 0.12);
 }
 
 .confirm-copy {
   margin: 0 0 18px;
-  color: #716a61;
-  font-size: 15px;
+  color: #7a7077;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -360,7 +403,11 @@ canvas:focus {
 }
 
 .confirm-actions .small-button {
-  font-size: 14px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
 .game-over-actions {
@@ -368,9 +415,17 @@ canvas:focus {
 }
 
 .confirm-button {
-  background-color: #6f55c6;
+  background: linear-gradient(180deg, #94070a 0%, #6a0408 100%);
   background-image: none;
-  color: #fff;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(148, 7, 10, 0.28);
+}
+
+.game-over-actions .confirm-button {
+  height: 48px;
+  border-radius: 14px;
+  font-size: 16px;
+  letter-spacing: 0.06em;
 }
 
 /* 手机使用上面的默认全宽布局；电脑端只限制游戏区域的最大宽度。 */
