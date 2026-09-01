@@ -21,7 +21,6 @@
   var restartConfirmTitle = document.getElementById("restartConfirmTitle");
   var restartCancelButton = document.getElementById("restartCancelButton");
   var restartConfirmButton = document.getElementById("restartConfirmButton");
-  var bgm = document.getElementById("bgm");
 
   var WORLD_WIDTH = 400;
   var WORLD_HEIGHT = 620;
@@ -43,8 +42,8 @@
   var FIXED_STEP = 1 / 120;
   var MAX_STEPS = 8;
   var WORLD_REST_DELAY = 0.9;
-  var WORLD_REST_SPEED = 4;
-  var WORLD_REST_POSITION_DRIFT = 0.1;
+  var WORLD_REST_SPEED = 0.25;
+  var WORLD_REST_POSITION_DRIFT = 0.06;
   var WORLD_REST_POSITION_DRIFT_SQUARED = WORLD_REST_POSITION_DRIFT * WORLD_REST_POSITION_DRIFT;
   var GRAVITY = 1480;
   var SOLVER_ITERATIONS = 12;
@@ -291,38 +290,6 @@
     soundIcon.classList.toggle("is-muted", !soundEnabled);
     soundButton.setAttribute("aria-label", soundEnabled ? "关闭声音" : "开启声音");
     soundButton.setAttribute("aria-pressed", String(soundEnabled));
-    syncBgm();
-  }
-
-  // 背景音乐：跟随 soundEnabled,首次用户手势后自动播放(浏览器自动播放策略要求)。
-  function syncBgm() {
-    if (!bgm) {
-      return;
-    }
-    bgm.volume = 0.45;
-    if (soundEnabled) {
-      var p = bgm.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(function () {});
-      }
-    } else {
-      bgm.pause();
-    }
-  }
-
-  function startBgmOnFirstGesture() {
-    if (!bgm) {
-      return;
-    }
-    var handler = function () {
-      if (soundEnabled) {
-        syncBgm();
-      }
-      window.removeEventListener("pointerdown", handler);
-      window.removeEventListener("keydown", handler);
-    };
-    window.addEventListener("pointerdown", handler);
-    window.addEventListener("keydown", handler);
   }
 
   function updateScoreDisplay(animate) {
@@ -546,8 +513,8 @@
     }
 
     var inverseMassSum = a.invMass + b.invMass;
-    var correctionDepth = Math.max(contact.penetration - 0.25, 0);
-    var correction = correctionDepth * 0.5 / inverseMassSum;
+    var correctionDepth = Math.max(contact.penetration - 0.12, 0);
+    var correction = correctionDepth * 0.72 / inverseMassSum;
 
     a.x -= contact.nx * correction * a.invMass;
     a.y -= contact.ny * correction * a.invMass;
@@ -1068,10 +1035,6 @@
         if (Math.abs(body.vy) < 9) {
           body.vy = 0;
         }
-      } else if (Math.abs(body.vx) < 6 && Math.abs(body.vy) < 6) {
-        // 钳制堆叠(非贴地)球的小残差速度,抹掉切向微抖,帮助全局休眠触发
-        body.vx = 0;
-        body.vy = 0;
       }
     });
 
@@ -1985,7 +1948,6 @@
   applyUiConfig();
   syncCanvasResolution();
   updateSoundControl();
-  startBgmOnFirstGesture();
   startGame();
   window.MERGE_GAME_MACHINE = Object.freeze({
     version: machineVersion,
