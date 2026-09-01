@@ -2,10 +2,10 @@
   color-scheme: light;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
   color: #29272d;
-  background-color: #efe6d7;
+  background-color: #e4dcef;
   background-image:
-    radial-gradient(120% 80% at 50% -10%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 60%),
-    linear-gradient(180deg, #faf4ea 0%, #ece2d1 100%);
+    radial-gradient(120% 80% at 50% -10%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 60%),
+    linear-gradient(180deg, #fbe7eb 0%, #eee4f5 55%, #e4dcef 100%);
   font-synthesis: none;
   line-height: 1.2;
   -webkit-tap-highlight-color: transparent;
@@ -152,15 +152,15 @@ canvas:focus {
   forced-color-adjust: none;
   border-radius: 22px;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -30px 56px rgba(120, 72, 24, 0.12),
-    0 16px 36px rgba(60, 40, 20, 0.16);
-  background-color: #f6ecd9;
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -30px 56px rgba(40, 10, 60, 0.18),
+    0 16px 36px rgba(40, 10, 60, 0.2);
+  background-color: #6a2a8a;
   background-image:
-    radial-gradient(circle, rgba(148, 7, 10, 0.045) 1px, transparent 1.6px),
-    radial-gradient(125% 70% at 50% -10%, #fffaf0 0%, rgba(255, 250, 240, 0) 58%),
-    radial-gradient(circle at 50% 118%, rgba(120, 72, 24, 0.14) 0%, rgba(120, 72, 24, 0) 55%),
-    linear-gradient(180deg, #fff8ec 0%, #f3e8d4 60%, #ecdfc4 100%);
+    radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1.6px),
+    radial-gradient(125% 70% at 50% -10%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 58%),
+    radial-gradient(circle at 50% 118%, rgba(20, 6, 36, 0.22) 0%, rgba(20, 6, 36, 0) 55%),
+    linear-gradient(180deg, #d93553 0%, #a8327f 50%, #6a2a8a 100%);
   background-size: 22px 22px, 100% 100%, 100% 100%, 100% 100%;
   isolation: isolate;
 }
@@ -364,16 +364,6 @@ canvas:focus {
   background-color: #6f55c6;
   background-image: none;
   color: #fff;
-}
-
-.app-footer {
-  padding: 8px;
-}
-
-.app-link-button {
-  width: 100%;
-  background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-  font-size: 16px;
 }
 
 /* 手机使用上面的默认全宽布局；电脑端只限制游戏区域的最大宽度。 */

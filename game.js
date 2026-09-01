@@ -21,6 +21,7 @@
   var restartConfirmTitle = document.getElementById("restartConfirmTitle");
   var restartCancelButton = document.getElementById("restartCancelButton");
   var restartConfirmButton = document.getElementById("restartConfirmButton");
+  var bgm = document.getElementById("bgm");
 
   var WORLD_WIDTH = 400;
   var WORLD_HEIGHT = 620;
@@ -290,6 +291,38 @@
     soundIcon.classList.toggle("is-muted", !soundEnabled);
     soundButton.setAttribute("aria-label", soundEnabled ? "关闭声音" : "开启声音");
     soundButton.setAttribute("aria-pressed", String(soundEnabled));
+    syncBgm();
+  }
+
+  // 背景音乐：跟随 soundEnabled,首次用户手势后自动播放(浏览器自动播放策略要求)。
+  function syncBgm() {
+    if (!bgm) {
+      return;
+    }
+    bgm.volume = 0.45;
+    if (soundEnabled) {
+      var p = bgm.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(function () {});
+      }
+    } else {
+      bgm.pause();
+    }
+  }
+
+  function startBgmOnFirstGesture() {
+    if (!bgm) {
+      return;
+    }
+    var handler = function () {
+      if (soundEnabled) {
+        syncBgm();
+      }
+      window.removeEventListener("pointerdown", handler);
+      window.removeEventListener("keydown", handler);
+    };
+    window.addEventListener("pointerdown", handler);
+    window.addEventListener("keydown", handler);
   }
 
   function updateScoreDisplay(animate) {
@@ -1952,6 +1985,7 @@
   applyUiConfig();
   syncCanvasResolution();
   updateSoundControl();
+  startBgmOnFirstGesture();
   startGame();
   window.MERGE_GAME_MACHINE = Object.freeze({
     version: machineVersion,
