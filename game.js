@@ -21,9 +21,7 @@
   var restartConfirmTitle = document.getElementById("restartConfirmTitle");
   var restartCancelButton = document.getElementById("restartCancelButton");
   var restartConfirmButton = document.getElementById("restartConfirmButton");
-  var myUstcAppButton = document.getElementById("myUstcAppButton");
 
-  var MY_USTC_APP_URL = "https://myustc.feixu.site/";
   var WORLD_WIDTH = 400;
   var WORLD_HEIGHT = 620;
   // A 1024+ pixel backing canvas is unnecessarily expensive on a phone. Keep
@@ -1819,16 +1817,6 @@
 
   addPointerClickListener(restartConfirmButton, function () {
     closeConfirm(true);
-  });
-
-  myUstcAppButton.addEventListener("click", function () {
-    if (!hasDroppedItem) {
-      window.location.assign(MY_USTC_APP_URL);
-    } else if (mode !== "confirming") {
-      openConfirm("前往我的科大App？", "前往", function () {
-        window.location.assign(MY_USTC_APP_URL);
-      });
-    }
   });
 
   addPointerClickListener(soundButton, function () {
