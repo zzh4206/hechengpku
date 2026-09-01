@@ -42,11 +42,11 @@
   var FIXED_STEP = 1 / 120;
   var MAX_STEPS = 8;
   var WORLD_REST_DELAY = 0.9;
-  var WORLD_REST_SPEED = 0.25;
-  var WORLD_REST_POSITION_DRIFT = 0.06;
+  var WORLD_REST_SPEED = 4;
+  var WORLD_REST_POSITION_DRIFT = 0.1;
   var WORLD_REST_POSITION_DRIFT_SQUARED = WORLD_REST_POSITION_DRIFT * WORLD_REST_POSITION_DRIFT;
   var GRAVITY = 1480;
-  var SOLVER_ITERATIONS = 7;
+  var SOLVER_ITERATIONS = 12;
   var AIR_DAMPING = 0.998;
   var GROUND_DRAG = 4.4;
   var CIRCLE_RESTITUTION = 0.06;
@@ -513,8 +513,8 @@
     }
 
     var inverseMassSum = a.invMass + b.invMass;
-    var correctionDepth = Math.max(contact.penetration - 0.12, 0);
-    var correction = correctionDepth * 0.72 / inverseMassSum;
+    var correctionDepth = Math.max(contact.penetration - 0.25, 0);
+    var correction = correctionDepth * 0.5 / inverseMassSum;
 
     a.x -= contact.nx * correction * a.invMass;
     a.y -= contact.ny * correction * a.invMass;
@@ -1035,6 +1035,10 @@
         if (Math.abs(body.vy) < 9) {
           body.vy = 0;
         }
+      } else if (Math.abs(body.vx) < 6 && Math.abs(body.vy) < 6) {
+        // 钳制堆叠(非贴地)球的小残差速度,抹掉切向微抖,帮助全局休眠触发
+        body.vx = 0;
+        body.vy = 0;
       }
     });
 
